@@ -1,0 +1,28 @@
+{% include 'header.html' %}
+
+<h2 class="saldo-pendiente">Saldo Pendiente:{{saldo_total}}</h2>
+        
+<h2>Lista de Compras</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Compra</th>
+                <th>Total</th>
+                <th>Cuotas</th>
+                <th>Pendientes</th>
+                <th>Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for compra in compras %}
+            <tr>
+                <td>{{ compra.compra }}</td>
+                <td>{{ compra.total }}</td>
+                <td>{{ compra.cuotas }}</td>
+                <td>{{ compra.pendientes }}</td>
+                <td>{{ compra.saldo }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% include 'footer.html' %}

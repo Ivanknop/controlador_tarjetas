@@ -1,0 +1,21 @@
+{% include 'header.html' %}
+
+<div class="form-container">
+    <form method="POST">
+        <div class="form-group">
+            <label for="compra">Compra:</label>
+            <input type="text" name="compra" id="compra" required>
+        </div>
+        <div class="form-group">
+            <label for="total">Total:</label>
+            <input type="number" name="total" id="total" required>
+        </div>
+        <div class="form-group">
+            <label for="cuotas">Cuotas:</label>
+            <input type="number" name="cuotas" id="cuotas" required>
+        </div>
+        <button type="submit">Agregar</button>
+    </form>
+</div>
+
+{% include 'footer.html' %}

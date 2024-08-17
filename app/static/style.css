@@ -1,0 +1,203 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    margin: 1em;
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: #333; /* Texto gris oscuro */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el body tome toda la altura */
+}
+
+/* Headers */
+h2 {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
+}
+
+h3 {
+    font-size: 1em;
+    color: #004080; /* Azul un poco más claro */
+}
+
+p, ul {
+    margin-left: 10%;
+    margin-right: 10%;
+    color: #333; /* Texto gris oscuro */
+}
+
+/* Footer Styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333; /* Gris oscuro */
+    color: #f0f0f0; /* Texto gris claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+footer p, .icon {
+    font-size: 1.2em;
+    text-align: center;
+    margin-left: 1%;
+    color: #f0f0f0; /* Texto gris claro */
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    padding: 10px; /* Espaciado uniforme */
+    text-align: left; /* Alineación a la izquierda para mejor legibilidad */
+    border: 1px solid #004080; /* Borde azul oscuro */
+    font-size: 1em;
+    color: #333; /* Texto gris oscuro */
+}
+
+.table th {
+    background-color: #e0e0e0; /* Fondo gris claro para el encabezado */
+    color: #003366; /* Texto azul oscuro para el encabezado */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9; /* Fondo gris muy claro para filas impares */
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #e6e6e6; /* Fondo gris claro para filas pares */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #d0e0f0; /* Azul claro al pasar el ratón */
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #4a4a4a; /* Gris oscuro */
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    color: #f0f0f0; /* Texto gris claro */
+}
+
+/* Links en el navbar */
+.nav-logo a {
+    color: #f0f0f0; /* Color de texto uniforme para los enlaces */
+    font-size: 1.2rem; /* Tamaño de fuente consistente */
+    text-decoration: none; /* Quitar subrayado de los enlaces */
+    margin: 0 10px; /* Espacio entre los enlaces */
+}
+
+.nav-logo a:hover {
+    color: #b3cde0; /* Azul claro al pasar el ratón */
+}
+
+/* Título en el Navbar */
+.nav-title h2 {
+    font-size: 2rem; /* Tamaño del título */
+    color: #f0f0f0; /* Texto gris claro */
+    text-align: center; /* Centrar el título */
+    margin: 0 auto; /* Asegura que el título esté centrado */
+}
+
+/* Ícono del Navbar */
+.navbar-brand {
+    font-size: 2em; /* Tamaño del ícono */
+    color: #f0f0f0; /* Color del ícono */
+}
+
+.navbar-dark .navbar-brand:hover {
+    color: #b3cde0; /* Azul claro al pasar el ratón */
+}
+
+/* Centra el formulario en la página */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* Ajusta la altura según sea necesario */
+    margin-top: 2rem;
+}
+
+form {
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    padding: 2rem; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    width: 100%;
+    max-width: 500px; /* Ancho máximo del formulario */
+}
+
+.form-group {
+    margin-bottom: 1rem; /* Espacio entre los campos */
+}
+
+label {
+    display: block;
+    font-size: 1rem; /* Tamaño de fuente uniforme */
+    margin-bottom: 0.5rem; /* Espacio entre el label y el input */
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente uniforme */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+}
+
+button {
+    background-color: #007bff; /* Color de fondo azul */
+    color: #ffffff; /* Color del texto blanco */
+    border: none;
+    padding: 0.75rem 1.5rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente uniforme */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+button:hover {
+    background-color: #0056b3; /* Color de fondo azul más oscuro al pasar el ratón */
+}
+
+/* Oculta los controles de incremento/decremento en los campos numéricos */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Para Firefox */
+}
+
+/* Estilo para el saldo pendiente */
+.saldo-pendiente {
+    font-size: 2.5rem; /* Tamaño de fuente más grande */
+    color: #ff5733; /* Color destacado, puedes elegir otro color que contraste bien */
+    font-weight: bold; /* Negrita para mayor énfasis */
+    text-align: center; /* Centra el texto */
+    margin-top: 1rem; /* Espacio arriba del saldo pendiente */
+    margin-bottom: 1rem; /* Espacio abajo del saldo pendiente */
+    padding: 1rem; /* Espaciado interno para destacar más */
+    border: 2px solid #ff5733; /* Borde del mismo color que el texto */
+    border-radius: 8px; /* Bordes redondeados para un mejor aspecto */
+    background-color: #f7f7f7; /* Fondo claro para resaltar el saldo */
+}
