@@ -10,7 +10,6 @@
     <title>Controlador de Tarjetas</title>
 </head>
 <body>
-    <span id="top"</span>
     <nav class="navbar navbar-dark">
         <h2 class='nav-h2'>Controlador de Tarjetas de Crédito |</h2>
         <div class="nav-logo">
@@ -23,6 +22,14 @@
         </div>
         <div>
             <a href="/pagar_cuotas" class="btn btn-primary">Pagar Cuota</a>
+        </div>
+        <div>
+            <!-- Botón para vaciar la base de datos con confirmación -->
+            <form action="/clean_db" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas vaciar la base de datos? Esta acción no se puede deshacer.');">
+                    Vaciar Base
+                </button>
+            </form>
         </div>
     </nav>
 

@@ -9,8 +9,10 @@ class UsoTarjeta(db.Model):
     cuotas = db.Column(db.Integer, nullable=False)
     pendientes = db.Column(db.Integer, nullable=False)
     saldo = db.Column(db.Float, nullable=False)
+    tarjeta = db.Column(db.String(20),nullable=False)
     
-    def __init__(self, compra, total, cuotas):
+    def __init__(self, compra, total, cuotas,tarjeta):
+        self.tarjeta = tarjeta
         self.compra = compra
         self.total = total
         self.cuotas = cuotas
@@ -27,6 +29,8 @@ class UsoTarjeta(db.Model):
         return self.pendientes
     def get_saldo(self):
         return self.saldo
+    def get_tarjeta(self):
+        return self.tarjeta
     def get_valor_cuota(self):
         return self.total / self.cuotas
             
