@@ -54,7 +54,7 @@ footer p, .icon {
 }
 
 table {
-    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho */
+    width: 100%; 
     border-collapse: collapse;
     margin-top: 0.1em;
 }
@@ -72,10 +72,10 @@ th {
 }
 
 td {
-    width: 100%; /* Asegura que cada celda ocupe todo el espacio disponible */
+    width: 100%;
 }
 .tarjeta-section {
-    width: 100%; /* Ocupa el 100% del ancho del contenedor padre */
+    width: 100%; 
     margin-bottom: 1em;
     overflow: auto; /* Para asegurar que el contenido se ajuste si es necesario */
 }
@@ -83,7 +83,7 @@ td {
 .tarjeta-table {
     display: none; /* Oculto por defecto */
     margin-top: 10px;
-    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho */
+    width: 100%; 
     transition: all 0.3s ease-in-out; /* Transición suave para la visualización */
 }
 

@@ -34,10 +34,14 @@ class UsoTarjeta(db.Model):
         self.monto_cuota = self.get_valor_cuota()
 
     def get_valor_cuota(self):
+        if self.pendientes == -1:
+            return self.total
         return round(self.total / self.cuotas, 2)
     
     def pago_cuota(self):
-        if self.pendientes > 0:
+        if self.pendientes == -1:
+            self.saldo = self.total
+        elif self.pendientes > 0:
             self.pendientes -= 1
             self.saldo -= self.get_valor_cuota()
 
@@ -58,21 +62,31 @@ def crear_tarjetas():
 def index():        
     tarjetas = Tarjeta.query.all()
     compras_por_tarjeta = {}
+    
     for tarjeta in tarjetas:
-        compras = UsoTarjeta.query.filter_by(tarjeta=tarjeta.nombre).filter(UsoTarjeta.pendientes > 0).all()
+        compras = UsoTarjeta.query.filter_by(tarjeta=tarjeta.nombre).filter(  (UsoTarjeta.pendientes > 0) | (UsoTarjeta.pendientes == -1)).all()
         if compras:
             compras_por_tarjeta[tarjeta.nombre] = compras
-    subtotales_mensuales = {tarjeta: round(sum(compra.monto_cuota for compra in compras), 2) for tarjeta, compras in compras_por_tarjeta.items()}
     
-    # Calcular el monto total a pagar por todas las cuotas pendientes por tarjeta
+    subtotales_mensuales = {}
+    for tarjeta, compras in compras_por_tarjeta.items():
+        subtotal_mensual = 0
+        for compra in compras:
+            if compra.cuotas == -1:
+                # Si no tiene cuotas, se cuenta el total como gasto mensual
+                subtotal_mensual += compra.saldo
+            else:
+                # Si tiene cuotas, se cuenta el monto de cada cuota
+                subtotal_mensual += compra.monto_cuota
+        subtotales_mensuales[tarjeta] = round(subtotal_mensual, 2)
+    
     total_pagar = round(sum(
         compra.monto_cuota * compra.pendientes 
         for compras in compras_por_tarjeta.values() 
         for compra in compras
     ), 2)
     
-    mensual_pagar = round(sum(
-        compra.monto_cuota for compras in compras_por_tarjeta.values() for compra in compras), 2)
+    mensual_pagar = round(sum(compra.monto_cuota for compras in compras_por_tarjeta.values() for compra in compras), 2)
 
     return render_template(
         'index.html',

@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{ compra.compra }}</td>
                     <td>{{ compra.total }}</td>
-                    <td>{{ compra.cuotas }}</td>
+                    <td>{{ 'Infinito' if compra.cuotas == -1 else compra.cuotas}}</td>
                     <td>{{ compra.pendientes }}</td>
                     <td>{{ compra.saldo }}</td>
                 </tr>
@@ -41,7 +41,7 @@
     function toggleTable(id) {
         var table = document.getElementById(id);
         if (table.style.display === "none" || table.style.display === "") {
-            table.style.display = "table";
+            table.style.display = "block";
         } else {
             table.style.display = "none";
         }
