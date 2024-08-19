@@ -53,37 +53,38 @@ footer p, .icon {
     color: #f0f0f0;
 }
 
-/* Table Styles */
-.table {
-    width: 100%;
+table {
+    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho */
     border-collapse: collapse;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 0.1em;
 }
 
-.table th, .table td {
-    padding: 1em; 
-    text-align: left; /* Alineación a la izquierda */
-    border: 1px solid #004080; 
-    font-size: 0.8em;
-    color: #333;
+th, td {
+    border: 1px solid #ddd;
+    padding: 1em;
+    text-align: left;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño */
 }
 
-.table th {
-    background-color: #e0e0e0; 
-    color: #003366; 
+th {
+    background-color: #4a4a4a;
+    color: #f0f0f0;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9; /* Fondo gris muy claro para filas impares */
+td {
+    width: 100%; /* Asegura que cada celda ocupe todo el espacio disponible */
+}
+.tarjeta-section {
+    width: 100%; /* Ocupa el 100% del ancho del contenedor padre */
+    margin-bottom: 1em;
+    overflow: auto; /* Para asegurar que el contenido se ajuste si es necesario */
 }
 
-.table-striped tbody tr:nth-of-type(even) {
-    background-color: #e6e6e6; /* Fondo gris claro para filas pares */
-}
-
-.table-hover tbody tr:hover {
-    background-color: #d0e0f0; 
+.tarjeta-table {
+    display: none; /* Oculto por defecto */
+    margin-top: 10px;
+    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho */
+    transition: all 0.3s ease-in-out; /* Transición suave para la visualización */
 }
 
 /* Navbar Styles */
@@ -91,14 +92,13 @@ footer p, .icon {
     background-color: #4a4a4a; 
     display: flex;
     align-items: center;
-    padding: 1rem;
     color: #f0f0f0; 
 }
 
 /* Links en el navbar */
 .nav-logo a {
     color: #f0f0f0; 
-    font-size: 1.2rem; 
+    font-size: 1rem; 
     text-decoration: none; /* Quitar subrayado de los enlaces */
     margin: 0 10px; 
 }
@@ -108,15 +108,13 @@ footer p, .icon {
 }
 
 /* Título en el Navbar */
-.nav-title h2 {
-    font-size: 2rem; 
+.nav-h2  {
     color: #f0f0f0; 
-    text-align: center; 
-    margin: 0 auto; /* Asegura que el título esté centrado */
+    text-align: center;
 }
 
 /* Ícono del Navbar */
-.navbar-brand {
+.nav-logo .navbar-brand {
     font-size: 2em; 
     color: #f0f0f0; 
 }
@@ -193,7 +191,7 @@ input[type="number"] {
 
 /* Estilo para el saldo pendiente */
 .saldo-pendiente {
-    font-size: 2.5rem; 
+    font-size: 2rem; 
     color: #ff5733; 
     font-weight: bold; 
     text-align: center; 
@@ -203,4 +201,18 @@ input[type="number"] {
     border: 2px solid #ff5733; 
     border-radius: 8px; 
     background-color: #f7f7f7; 
+}
+
+.subtotal {
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: #4a4a4a;
+    color: #f0f0f0;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.subtotal:hover {
+    background-color: #5a5a5a;
 }

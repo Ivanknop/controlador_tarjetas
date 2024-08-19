@@ -4,7 +4,11 @@
     <form method="POST">
         <div class="form-group">
             <label for="tarjeta">Tarjeta:</label>
-            <input type="text" name="tarjeta" id="tarjeta" required>
+            <select name="tarjeta" id="tarjeta" required>
+                {% for tarjeta in tarjetas %}
+                <option value="{{ tarjeta.nombre }}">{{ tarjeta.nombre }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="form-group">
             <label for="compra">Compra:</label>

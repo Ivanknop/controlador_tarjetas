@@ -3,13 +3,20 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-# Indicamos al sistema (app) de donde leer la base de datos
+# Indicamos al sistema (app) de dónde leer la base de datos
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tarjetas.db"
 db = SQLAlchemy(app)
 
+class Tarjeta(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), unique=True, nullable=False)
+
+    def __init__(self, nombre):
+        self.nombre = nombre
+
 class UsoTarjeta(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    tarjeta = db.Column(db.String(20),nullable=False)
+    tarjeta = db.Column(db.String(100), nullable=False)
     compra = db.Column(db.String(100), nullable=False)
     total = db.Column(db.Float, nullable=False)
     cuotas = db.Column(db.Integer, nullable=False)
@@ -17,8 +24,8 @@ class UsoTarjeta(db.Model):
     monto_cuota = db.Column(db.Float, nullable=False)
     saldo = db.Column(db.Float, nullable=False)
 
-    def __init__(self, compra, total, cuotas,tarjeta):        
-        self.tarjeta = tarjeta
+    def __init__(self, compra, total, cuotas,tarjeta):  
+        self.tarjeta = tarjeta  
         self.compra = compra
         self.total = total
         self.cuotas = cuotas
@@ -27,7 +34,7 @@ class UsoTarjeta(db.Model):
         self.monto_cuota = self.get_valor_cuota()
 
     def get_valor_cuota(self):
-        return round(self.total / self.cuotas,2)
+        return round(self.total / self.cuotas, 2)
     
     def pago_cuota(self):
         if self.pendientes > 0:
@@ -35,16 +42,45 @@ class UsoTarjeta(db.Model):
             self.saldo -= self.get_valor_cuota()
 
 # Crear las tablas en la base de datos si no existen
-
 with app.app_context():
     db.create_all()
-    
+
+@app.before_first_request
+def crear_tarjetas():
+    tarjetas = ['Visa Galicia', 'Visa Provincia', 'Mastercard Galicia', 'Mastercard Provincia']
+    for nombre in tarjetas:
+        if not Tarjeta.query.filter_by(nombre=nombre).first():
+            nueva_tarjeta = Tarjeta(nombre)
+            db.session.add(nueva_tarjeta)
+    db.session.commit()
+
 @app.route('/')
 def index():        
-    compras = UsoTarjeta.query.filter(UsoTarjeta.pendientes > 0).all()
-    saldo_total = round(sum(compra.saldo for compra in compras), 2)
-    saldo_mensual = round(sum(compra.monto_cuota for compra in compras), 2)
-    return render_template('index.html', saldo_total=saldo_total,compras=compras,saldo_mensual=saldo_mensual)
+    tarjetas = Tarjeta.query.all()
+    compras_por_tarjeta = {}
+    for tarjeta in tarjetas:
+        compras = UsoTarjeta.query.filter_by(tarjeta=tarjeta.nombre).filter(UsoTarjeta.pendientes > 0).all()
+        if compras:
+            compras_por_tarjeta[tarjeta.nombre] = compras
+    subtotales_mensuales = {tarjeta: round(sum(compra.monto_cuota for compra in compras), 2) for tarjeta, compras in compras_por_tarjeta.items()}
+    
+    # Calcular el monto total a pagar por todas las cuotas pendientes por tarjeta
+    total_pagar = round(sum(
+        compra.monto_cuota * compra.pendientes 
+        for compras in compras_por_tarjeta.values() 
+        for compra in compras
+    ), 2)
+    
+    mensual_pagar = round(sum(
+        compra.monto_cuota for compras in compras_por_tarjeta.values() for compra in compras), 2)
+
+    return render_template(
+        'index.html',
+        compras_por_tarjeta=compras_por_tarjeta,
+        mensual_pagar=mensual_pagar,
+        subtotales_mensuales=subtotales_mensuales,
+        total_pagar=total_pagar
+    )
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_compra():
@@ -57,7 +93,13 @@ def add_compra():
         db.session.add(nueva_compra)
         db.session.commit()
         return redirect('/')
-    return render_template('add.html')
+    tarjetas = Tarjeta.query.all()
+    return render_template('add.html', tarjetas=tarjetas)
+
+@app.route('/filtrar_tarjeta', methods=['GET', 'POST'])
+def filtrar_tarjeta():
+    
+    return render_template('filtrar_tarjeta.html')
 
 @app.route('/pagar_cuotas')
 def pagar_cuotas():

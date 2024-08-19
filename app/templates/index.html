@@ -1,33 +1,51 @@
 {% include 'header.html' %}
 
-<h2 class="saldo-pendiente">Saldo de este Mes:{{saldo_mensual}}</h2>
+<h2 class="saldo-pendiente">Saldo de este Mes: ${{mensual_pagar}}</h2>
 <h2>Lista de Compras</h2>
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Tarjeta</th>
-                <th>Compra</th>
-                <th>Total</th>
-                <th>Cuotas</th>
-                <th>Pendientes</th>
-                <th>Monto Cuota</th>
-                <th>Saldo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for compra in compras %}
-            <tr>
-                <td>{{ compra.tarjeta }}</td>
-                <td>{{ compra.compra }}</td>
-                <td>{{ compra.total }}</td>
-                <td>{{ compra.cuotas }}</td>
-                <td>{{ compra.pendientes }}</td>
-                <td>{{ compra.monto_cuota }}</td>
-                <td>{{ compra.saldo }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
-<h2 class="saldo-pendiente">Saldo Pendiente:{{saldo_total}}</h2>
+{% for tarjeta, compras in compras_por_tarjeta.items() %}
+<div class="tarjeta-section">
+    <div class="subtotal" onclick="toggleTable('table-{{ loop.index }}')">
+        {{ tarjeta }} - Total a Pagar este mes: ${{ subtotales_mensuales[tarjeta] }}
+    </div>
+    <div id="table-{{ loop.index }}" class="tarjeta-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Compra</th>
+                    <th>Total</th>
+                    <th>Cuotas</th>
+                    <th>Pendientes</th>
+                    <th>Saldo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                <tr>
+                    <td>{{ compra.compra }}</td>
+                    <td>{{ compra.total }}</td>
+                    <td>{{ compra.cuotas }}</td>
+                    <td>{{ compra.pendientes }}</td>
+                    <td>{{ compra.saldo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endfor %}
+
+<h2 class="saldo-pendiente">Saldo Total: ${{total_pagar}}</h2>
+
+<script>
+    function toggleTable(id) {
+        var table = document.getElementById(id);
+        if (table.style.display === "none" || table.style.display === "") {
+            table.style.display = "table";
+        } else {
+            table.style.display = "none";
+        }
+    }
+</script>
+
 {% include 'footer.html' %}
